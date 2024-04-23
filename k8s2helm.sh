@@ -80,5 +80,6 @@ while IFS= read -r line; do
     fi
 done <<< "$compatibility_table"
 
-# Now that we know the Helm version, let's get the latest patch for it. 
+# Now that we know the Helm version, let's get the latest patch for it. Initially setting the loop down iter to 10, 
+# since most helm patches are lower than this, but we may want to adjust this if being used in any automated/production capacity.
 loop_down_versions "$helm_version" 10
