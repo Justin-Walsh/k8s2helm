@@ -7,6 +7,10 @@ k8s_version="1.16"
 compatibility_table_url="https://raw.githubusercontent.com/helm/helm-www/main/content/en/docs/topics/version_skew.md"
 
 # Function to check if a version is within a version range (inclusive) without considering patch versions
+# Args:
+# $1 = Version to check
+# $2 = Minimum version to check against
+# $3 = Maximum version to check against
 is_version_within_range() {
     local version=$1
     local min_version=$2
@@ -25,6 +29,9 @@ is_version_within_range() {
 
 # Function to loop down from a defined value and attempt to hit the GitHub API endpoint for each version
 ## This is kinda hacky, but the `releases` endpoint is massive
+# Args:
+# $1 = Major.Minor version
+# $2 = Starting iteration to loop down from
 loop_down_versions() {
     local major_minor=$1
     local start_iteration=$2
@@ -73,5 +80,5 @@ while IFS= read -r line; do
     fi
 done <<< "$compatibility_table"
 
-# Now that we know the Helm version, let's get the latest patch for it.
+# Now that we know the Helm version, let's get the latest patch for it. 
 loop_down_versions "$helm_version" 10
